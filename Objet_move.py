@@ -1,7 +1,7 @@
 class Error(Exception):
 
     def __str__(self):
-        return 'Arret échap par utilisateur'
+        return 'Arret échape par utilisateur'
 
 
 import pyautogui as sy
@@ -77,7 +77,7 @@ class Move:
                 sy.write(self.séquence[i + 1])
 
 
-    def ex_dir(self, *args): # LEs 
+    def ex_dir(self, *args):
         self.séquence = []
         for s in args:
             self.séquence.append(s)
@@ -99,4 +99,3 @@ class Move:
         cell = coordonées[1]
         ws = self.wb.Sheets(paper)
         self.retour = ws.Range(cell).Value
-        print(self.retour)
