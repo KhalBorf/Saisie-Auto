@@ -5,7 +5,7 @@ from Objet_move import Move
 
 class Initiation:
 
-    def __init__(self, wb1, coordonées, etablissement, code_article, code, libellé, code_composant, poids, comm_composant, gamme1):
+    def __init__(self, wb1, coordonées, etablissement, code_article, code, libellé):
         self.move = Move(wb1)
         liste = list(coordonées.keys())
         self.c_ajouter = coordonées[liste[0]][0]
@@ -20,11 +20,6 @@ class Initiation:
         self.etablissement = etablissement
         self.code = code
         self.libellé = libellé
-        self.code_composant = code_composant
-        self.poids = poids
-        self.comm_composant = comm_composant
-        self.gamme = gamme1
-
 
     def p_ajouter(self):
         self.move.ex_dir('Wait',1,'Click', self.c_ajouter ,'Taber', 1, 'Press', 'enter', 'Wait', 0.2, 'Paste xl', self.code_article, 0.2,
@@ -34,10 +29,10 @@ class Initiation:
 
 
 
-    def composant(self):# à modifier
-        self.move.ex_dir('Click', (960,540), 'Scroll', 'Wait', 0.2, 'Click', self.c_dossier, 'Wait', 0.2,'Scroll', 'Wait', 0.2,
-                         'Click', self.c_composant, 'Wait', 0.3, 'Paste xl', self.code_composant, 0.2, 'Taber', 1, 'Wait', 0.3,
-                         'Paste xl', self.poids, 0.3, 'Taber', 12, 'Paste xl', self.comm_composant, 0.1,'Taber', 3, 'Wait', 0.3, 'Press', 'enter')
+    #def composant(self):# à modifier
+    #   self.move.ex_dir('Click', (960,540), 'Scroll', 'Wait', 0.2, 'Click', self.c_dossier, 'Wait', 0.2,'Scroll', 'Wait', 0.2,
+    #                     'Click', self.c_composant, 'Wait', 0.3, 'Paste xl', self.code_composant, 0.2, 'Taber', 1, 'Wait', 0.3,
+    #                     'Paste xl', self.poids, 0.3, 'Taber', 12, 'Paste xl', self.comm_composant, 0.1,'Taber', 3, 'Wait', 0.3, 'Press', 'enter')
 
 
     def DonnT(self):# à modifier
@@ -55,7 +50,6 @@ class Initiation:
 
     def set_speed(speed):
         Move.set_speed(speed)
-
 
 
 class Operation:
@@ -89,7 +83,6 @@ class Operation:
             'Reglage<>fab': 7 }
         self.liste = list(self.tabulations)
 
-
     def set_pause(pause):
         Move.set_pause(pause)
 
@@ -102,7 +95,7 @@ class Operation:
         cls.itération += 1
 
     @classmethod
-    def set(cls, coordonées, wb, op1, op2, opm1, opm2, c_comm, gamme, c_valider, c_fermer):
+    def set(cls, coordonées, wb, op1, op2, opm1, opm2, c_comm, c_valider, c_fermer):
         cls.coordonées = coordonées
         cls.wb = wb
         cls.op1 = op1
@@ -110,7 +103,6 @@ class Operation:
         cls.opm1 = opm1
         cls.opm2 = opm2
         cls.c_comm = c_comm
-        cls.gamme = gamme
         cls.c_valider = c_valider
         cls.c_fermer = c_fermer
 
@@ -186,3 +178,6 @@ class Operation:
 
     def fermer(self):
         self.move.ex_dir('Scroll', 'Wait', 0.1, 'Click', Operation.c_fermer)
+
+    def __str__(self):
+        return "Cdc : " + self.centre + "\nTps Réglage : " + self.tps_reg + "\nTps Fab. : " + self.tps_fab + "\nCommentaire : " + self.commentaire + "\n\n"

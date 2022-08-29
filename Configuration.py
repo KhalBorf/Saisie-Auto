@@ -9,9 +9,9 @@ import ast
 sy.PAUSE = 0
 from Coordonnées import CoordonnéesEcran
 CE = CoordonnéesEcran
-path = 'Q:/SYLOB/10 - Saisie auto/autosais V05/configurations55.ini'
+path = 'S/Lille/METHODES/configurations.ini'
 profile = [
-    'Khalil']
+    'Edouard']
 choix2 = [
     '0']
 la_posi = [
