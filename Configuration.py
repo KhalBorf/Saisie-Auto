@@ -9,9 +9,9 @@ import ast
 sy.PAUSE = 0
 from Coordonnées import CoordonnéesEcran
 CE = CoordonnéesEcran
-path = 'Q:/SYLOB/10 - Saisie auto/autosais V05/configurations55.ini'
+path = "S:/Lille/METHODES/Copier coller des DT/Code/configurations.ini"
 profile = [
-    'Khalil']
+    'Edouard']
 choix2 = [
     '0']
 la_posi = [
@@ -20,8 +20,8 @@ la_posi = [
 liste = list(CE.dictio.keys())
 
 def lecture_clique():
-    with keyboard.Events as events:
-        event = events.ge(6)
+    with keyboard.Events() as events:
+        event = events.get(6)
         if format(event) == 'Press(key=Key.esc)' or format(event) == 'Release(key=Key.esc)':
             la_posi = sy.position()
             return la_posi[0], la_posi[1]
@@ -64,12 +64,12 @@ def fenetre(langs, le_type):
 
         def charger_la_config():
             profile[0] = selected_langs
-            instruction('Information', f'Vous avez selectioné: {selected_langs}')
+            instruction('Information', f'Vous avez selectionné: {selected_langs}')
 
 
         def supprimer_la_config():
             profile[0] = selected_langs
-            instruction('Information', f'Vous avez selectioné: {selected_langs}')
+            instruction('Information', f'Vous avez selectionné: {selected_langs}')
 
 
         def ajouter_une_config():
@@ -134,18 +134,20 @@ def save_config(config):
 def config_choix(sta, choix1):
     choix1 = '0'
     if choix1 == '0':
-        choix1 = sy.confirm(text = 'Veuillez faire un choix', title = 'Demarage', buttons = [
+        choix1 = sy.confirm(text = 'Veuillez faire un choix', title = 'Démarrage', buttons = [
             'Suivant',
             'Charger une config',
             'Ajouter une config',
-            'Supprimer une config'])
+            'Supprimer une config',
+            'Informations',
+            'Quitter'])
     if choix1 == 'Charger une config':
         fenetre_charger()
         lire_config()
         choix1 = '0'
     elif choix1 == 'Supprimer une config':
         fenetre_supprimer()
-        if sy.confirm(text = 'Etes vous sure de vouloir supprimer la configuration', title = 'Confirmation', buttons = [
+        if sy.confirm(text = 'Etes vous sûr de vouloir supprimer la configuration ?', title = 'Confirmation', buttons = [
             'Oui',
             'Annuler']) == 'Oui':
             supprimer_config()
@@ -157,21 +159,27 @@ def config_choix(sta, choix1):
             'Annuler',
             'Modifier'])
         if choix1 == 'Enregistrer':
-            profile[0] = sy.prompt(text = 'Veuillez nommer la configuration', title = 'Configuration', defualt = '')
+            profile[0] = sy.prompt(text = 'Veuillez nommer la configuration', title = 'Configuration', default = '')
             create_config()
             choix1 = '0'
         elif choix1 == 'Modifier':
             choix1 = 'Ajouter une config'
         else:
             choix1 = '0'
+    elif choix1 == 'Informations':
+        sy.confirm(text = ' - Appuyez sur ÉCHAP pour annuler la saisie\n\n - Rentrez toutes les informations nécessaires dans l\'Excel\n\n - Si un composant n\'est pas géré en stock, il y aura un problème d\'affectation sur l\'opération (ce qui n\'est pas si grave)\n\n - Si il y a une erreur dans Sylob (message rouge au haut de la page), actualisez là\n\n - Attention à ce que Sylob prenne toute la taille de l\'écran (Actualisez si nécessaire, touche f5 ou la flèche qui boucle en haut à gauche)\n\n - Attention à ce que le ruban à gauche soit visible ou non, la même situation quand vous avez configuré\n\n - Votre presse papier va être écrasé\n\n - Les coordonnées sont fragiles et très importantes\n\n - Une configuration par écran\n\n - Votre ordinateur est inutilisable pendant les 2 minutes qui suivent', title = 'Informations', buttons = ["D'accord"])
     elif choix1 == 'Suivant':
-        return
-    config_choix(0, '0')
+        return 0
+    elif choix1 == 'Quitter':
+        return -1
+    temp = config_choix(0, '0')
+    if temp == -1:
+        return -1
 
 
 
 class Configu:
 
     def execute(cls):
-        config_choix(0, '0')
-        return CE.dictio
+        temp = config_choix(0, '0')
+        return CE.dictio, temp
